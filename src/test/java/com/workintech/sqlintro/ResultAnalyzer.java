@@ -61,6 +61,15 @@ public class ResultAnalyzer implements TestWatcher, AfterAllCallback{
         json.put("score", score);
         json.put("taskId", taskId);
         json.put("userId", userId);
+
+        System.out.println("========================================");
+        System.out.println("Sending test results to Workintech...");
+        System.out.println("Score: " + score);
+        System.out.println("TaskId: " + taskId);
+        System.out.println("UserId: " + userId);
+        System.out.println("JSON: " + json.toString());
+        System.out.println("========================================");
+
         sendTestResult(json.toString());
     }
 
@@ -72,7 +81,10 @@ public class ResultAnalyzer implements TestWatcher, AfterAllCallback{
             request.addHeader("content-type", "application/json");
             request.setEntity(params);
             HttpResponse response = httpClient.execute(request);
+            System.out.println("API Response Status: " + response.getStatusLine().getStatusCode());
+            System.out.println("Test results sent successfully!");
         } catch (Exception ex) {
+            System.out.println("Error sending test results: " + ex.getMessage());
             ex.printStackTrace();
         } finally {
             httpClient.close();
